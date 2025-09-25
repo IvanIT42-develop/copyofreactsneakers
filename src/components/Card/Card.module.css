@@ -1,0 +1,57 @@
+.card{
+  width: 210px;
+  height: 260px;
+  border: 1px solid rgb(188, 184, 184);
+  border-radius: 40px;
+  transition: box-shadow 0.2 ease-in-out, transform 0.2 ease-in-out;
+  
+}
+.card:hover{
+  box-shadow: 0px 20px 30px rgba(0,0,0,0.06);
+  transform: translateY(-5px);
+}
+.paddinglike{
+   padding-left: 30px;
+}
+
+.plusbtn{
+  border-radius: 5px;
+  padding: 0;
+  height: 32px;
+  align-self: center;
+  cursor: pointer;
+}
+.likebtn{
+margin-bottom: -40px;
+border: 1px solid gray;
+padding: 5px;
+border-radius: 5px;
+position: relative;
+z-index: 2;
+cursor: pointer;
+ padding: 0;
+}
+.greensneak{
+  display: flex;
+  justify-self: center;
+}
+.span1{
+  width: 150px;
+  display: flex;
+  justify-self: center;
+  font-size: 14px;
+}
+.priceandadd{
+  display: grid;
+ grid-template-columns: auto auto;
+ grid-template-rows: auto;
+ justify-self: center;
+ height: 100px;
+ align-items: center;
+ grid-column-gap: 50px;
+}
+.h42{
+  color: rgb(156, 150, 143);
+margin: 0;
+text-transform: uppercase;
+}
