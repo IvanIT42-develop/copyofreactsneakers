@@ -48,15 +48,11 @@ function Header(props) {
           </li>
           <li>
            
-          <BrowserRouter>
-            <Link to="/bookmarks" onClick={props.onClickLike} >
-            <img src={like} alt="Закладки" className="captionicons" />
+          
+            <Link to="/bookmarks"  onClick={props.onClickLike}>
+            <img src={like} alt="Закладки" className="captionicons"  />
           </Link>
-        <Routes>
-          <Route path="/book" element={
-            <div>eker</div>
-          }></Route>
-          </Routes></BrowserRouter>
+        
           <span>Закладки</span>
           </li>
           <li>

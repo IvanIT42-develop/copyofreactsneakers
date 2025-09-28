@@ -21,10 +21,12 @@ import Header from "../components/Header";
 import shoponclick from "../assets/img/shoponclick.png";
 import btnremove from "../assets/img/btn-remove.png";
 import arrow from "../assets/img/arrow.png";
+import boxBtn from "../assets/img/box.png"
+import leftBtn from "../assets/img/left.png"
 import Card from "./Card/Card";
 import { useState } from "react";
 
-function Drawer({ items,leftBtn, onCloseCard ,boxBtn,onRemoweDrawerItem}) {
+function Drawer({ items, onCloseCard ,onRemoweDrawerItem,imageMap}) {
 
   return (
     <div className="overlay">
@@ -51,7 +53,7 @@ function Drawer({ items,leftBtn, onCloseCard ,boxBtn,onRemoweDrawerItem}) {
                         <div
                           className="cartItemImg"
                           style={{
-                            backgroundImage: `url(${obj.imageUrl})`,
+                            backgroundImage: `url(${imageMap[obj.imageUrl]})`,
                             height: 70,
                             width: 70,
                             backgroundSize: "contain",

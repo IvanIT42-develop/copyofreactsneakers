@@ -4,9 +4,9 @@ import plus from "../../assets/img/plus.png";
 import classes from "../Card/Card.module.css";
 import like from "../../assets/img/like.png";
 
-function Card({ id, onFavorite, imageUrl, title, shoponclick, onPlus, price }) {
+function Card({ id, onFavorite, imageUrl, title, shoponclick, onPlus, price, favorited=false }) {
   const [isAdded, setIsAdded] = useState(false);
-  const [favorites, setFavorites] = useState(false);
+  const [favorites, setFavorites] = useState(favorited);
 
   const handleFavoriteClick = () => {
     setFavorites(!favorites);
