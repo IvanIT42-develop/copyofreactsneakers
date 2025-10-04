@@ -4,13 +4,14 @@ import { useState } from 'react';
 import search from "../assets/img/search.png";
 import axios from 'axios';
 import btnremove from "../assets/img/btn-remove.png";
-
+import CopyOfCard from '../components/copyOfCard/copyOfCard';
 const Home = ({ 
   items, 
   onAddToCard, 
   onAddToBookmarks, 
-  imageMap, 
-  shoponclick 
+ imageMap, 
+  shoponclick,
+    bookmarks,
 }) => { // ✅ Получаем все необходимые пропсы
     const [searchValue, setSearchValue] = useState('');
     
@@ -52,16 +53,20 @@ const Home = ({
             
             <div className="content1">
                 {filteredItems.map((item) => (
-                    <Card
-                        key={item.id}
-                        title={item.name}
-                        price={item.price}
-                        imageUrl={imageMap[item.imageUrl]} // ✅ Теперь imageMap доступен
-                        shoponclick={shoponclick} // ✅ shoponclick доступен
-                        onPlus={() => onAddToCard(item)} // ✅ onAddToCard доступен
-                        onFavorite={() => onAddToBookmarks(item)} // ✅ onAddToBookmarks доступен
-                        favorited ={false}
-                    />
+                  // В вашем основном компоненте (Home, App и т.д.)
+<Card
+  key={item.id}
+  id={item.id}
+  title={item.name}
+  price={item.price}
+  imageUrl={imageMap[item.imageUrl]}
+  shoponclick={shoponclick}
+  onPlus={onAddToCard}
+  onFavorite={onAddToBookmarks}
+originalImageUrl={item.imageUrl}
+      bookmarks={bookmarks}
+/>
+
                 ))}
             </div>
         </div>

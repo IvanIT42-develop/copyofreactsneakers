@@ -1,11 +1,13 @@
+
 import classes from "../bookmarks/classes.module.css";
 import { Link } from "react-router-dom";
-import Card from "../Card/Card";
+import CopyOfCard from "../copyOfCard/copyOfCard";
 import shoponclick from "../../assets/img/shoponclick.png";
-function Bookmarks({ bookmarks = [], onRemoveBookmark, imageMap }) {
+
+function Bookmarks({ bookmarks = [], onRemoveBookmark, imageMap, onAddToBookmarks, onAddToCard }) {
   return (
     <div>
-      <div className={classes.h1andreturn}> {/* Исправили clasess на classes */}
+      <div className={classes.h1andreturn}>
         <h2>Мои закладки</h2>
         <Link to="/">
           <button>Вернуться назад</button>
@@ -13,18 +15,19 @@ function Bookmarks({ bookmarks = [], onRemoveBookmark, imageMap }) {
       </div>
       {bookmarks.map((item) => (
         <div key={item.id} className="bookmark-item">
-        
-               <Card
-                        key={item.id}
-                        title={item.name}
-                        price={item.price}
-                        imageUrl={imageMap[item.imageUrl]} // ✅ Теперь imageMap доступен
-                        shoponclick={shoponclick} // ✅ shoponclick доступен
-                        onPlus={() => onAddToCard(item)} // ✅ onAddToCard доступен
-                        favorited={true}
-                        onFavorite={() => onAddToBookmarks(item)} // ✅ onAddToBookmarks доступен
-                    />
-         
+          <CopyOfCard
+            key={item.id}
+            id={item.id} // ← ПЕРЕДАЙТЕ ID
+            title={item.name}
+            price={item.price}
+            imageUrl={imageMap[item.imageUrl]}
+            shoponclick={shoponclick}
+            onPlus={() => onAddToCard(item)}
+            onFavorite={() => onAddToBookmarks(item)}
+            onRemoveBookmark={onRemoveBookmark}
+            originalImageUrl={item.imageUrl} // ← ПЕРЕДАЙТЕ originalImageUrl
+            favorited={true}
+          />
           <button onClick={() => onRemoveBookmark(item.id)}>
             Удалить
           </button>
@@ -34,4 +37,4 @@ function Bookmarks({ bookmarks = [], onRemoveBookmark, imageMap }) {
   );
 }
 
-export default Bookmarks
+export default Bookmarks;

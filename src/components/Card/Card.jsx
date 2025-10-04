@@ -1,42 +1,56 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Добавлен useEffect
 import likeclick from "../../assets/img/likeclick.png";
 import plus from "../../assets/img/plus.png"; 
 import classes from "../Card/Card.module.css";
 import like from "../../assets/img/like.png";
 
-function Card({ id, onFavorite, imageUrl, title, shoponclick, onPlus, price, favorited=false }) {
+function Card({   bookmarks = [], id, onFavorite, imageUrl, title, shoponclick, onPlus, price, favorited = false, originalImageUrl, onRemoveBookmark,changeproblemfavorited }) { // Добавлен cartItems
   const [isAdded, setIsAdded] = useState(false);
-  const [favorites, setFavorites] = useState(favorited);
+
+
+  const isInBookmarks = bookmarks.some(item => item.id === id);
+    const [favorites, setFavorites] = useState(favorited);
+  useEffect(() => {
+    setFavorites(isInBookmarks);
+  }, [isInBookmarks]);
 
   const handleFavoriteClick = () => {
-    setFavorites(!favorites);
-    // Вызываем onFavorite только при клике
+
+  if(favorites){
+    onRemoveBookmark(id)
+  }
+  
+  else{
     onFavorite({
-      id: id, // добавляем id
+      id: id,
       name: title,
       price: price,
-      imageUrl: imageUrl,
+      
+      imageUrl:originalImageUrl,
     });
+    
+  }
+    
   };
 
   const handlePlusClick = () => {
     onPlus({
-      id: id, // добавляем id
+      id: id,
       name: title,
       price: price,
-      imageUrl: imageUrl,
+      imageUrl:originalImageUrl,
     });
-    setIsAdded(!isAdded);
+  setIsAdded(!isAdded)
   };
 
   return (
     <div className={classes.card}>
       <div className={classes.paddinglike}>
         <img
-          src={favorites ? likeclick : like}
+          src={favorites  ? likeclick : like}
           alt=""
           className={classes.likebtn}
-          onClick={handleFavoriteClick}
+          onClick={ handleFavoriteClick }
           style={{border: 'none'}}
         />
       </div>
@@ -53,7 +67,7 @@ function Card({ id, onFavorite, imageUrl, title, shoponclick, onPlus, price, fav
       <div className={classes.priceandadd}>
         <div>
           <h4 className={classes.h42}>Цена:</h4>
-          <span>{price}</span> {/* Используем переданную цену */}
+          <span>{price}</span>
         </div>
         <div className={`${classes.plusbtn} ${classes.padding}`}>
           <img

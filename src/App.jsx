@@ -62,24 +62,44 @@ const imageMap = {
     initBookmarks();
   }, []);
 
-  const onAddToCard = async (obj) => {
+const onAddToCard = async (obj) => {
     try {
-      const { data } = await axios.post(
-        "https://68c4305081ff90c8e61b84db.mockapi.io/card",
-        obj
-      );
-      setCartItems((prev) => [...prev, data]);
+        // Сначала проверяем в текущем состоянии
+        const existingItem = cartItems.find(item => 
+            item.parentId === obj.id || 
+            item.name === obj.name
+        );
+
+        if (existingItem) {
+            // Удаляем
+            await axios.delete(`https://68c4305081ff90c8e61b84db.mockapi.io/card/${existingItem.id}`);
+            setCartItems(prev => prev.filter(item => item.id !== existingItem.id));
+        } else {
+            // Добавляем
+            const itemToSave = {
+                ...obj,
+                parentId: obj.id // сохраняем оригинальный ID
+            };
+            const { data } = await axios.post(
+                "https://68c4305081ff90c8e61b84db.mockapi.io/card",
+                itemToSave
+            );
+            setCartItems(prev => [...prev, data]);
+        }
     } catch (error) {
-      console.error("Ошибка:", error);
+        console.error("Ошибка:", error);
     }
-  };
+};  const onAddToBookmarks = (obj) => {
+     
 
-  const onAddToBookmarks = (obj) => {
-    addToBookmarks(obj);
+ try{
+     addToBookmarks(obj);
     loadBookmarks();
-  };
-
-  const onRemoveItem = (id) => {
+ }
+ catch{
+console.log("Не удалось доабавить в фавориты")
+ }
+  };  const onRemoveItem = (id) => {
     axios.delete(`https://68c4305081ff90c8e61b84db.mockapi.io/card/${id}`);
     setCartItems((prev) => prev.filter(item => item.id !== id));
   };
@@ -104,6 +124,8 @@ const imageMap = {
               bookmarks={saveBookMarks}
               onRemoveBookmark={onRemoveBookmark}
               imageMap={imageMap}
+               onAddToBookmarks={onAddToBookmarks} // ← передайте эту функцию
+    onAddToCard={onAddToCard} // ← и эту функцию
             />
           } />
           
@@ -118,6 +140,9 @@ const imageMap = {
               onAddToBookmarks={onAddToBookmarks}
               imageMap={imageMap}
               shoponclick={shoponclick}
+              cartItems={cartItems}
+               onRemoveBookmark={onRemoveBookmark}
+               bookmarks={saveBookMarks}
             />
             
           } />

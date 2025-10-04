@@ -27,7 +27,8 @@ import Card from "./Card/Card";
 import { useState } from "react";
 
 function Drawer({ items, onCloseCard ,onRemoweDrawerItem,imageMap}) {
-
+  console.log("Drawer items:", items); // ДЛЯ ОТЛАДКИ
+  console.log("ImageMap:", imageMap)
   return (
     <div className="overlay">
       <div style={{ display: "flex", flexDirection: "column" }}>
